@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
@@ -27,9 +28,28 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -92,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        String request_url = "http://www.passbyus.org/codeforgood/translate.php";
         switch (requestCode) {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
@@ -102,6 +122,12 @@ public class MainActivity extends AppCompatActivity {
                     txtSpeechInput.setText(result.get(0));
 
                     phrase = result.get(0);
+                    try {
+                        new MyAsyncTask().execute(phrase);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
             }
@@ -154,12 +180,6 @@ public class MainActivity extends AppCompatActivity {
         popUp.show();
     }
 
-    public void record(View v) {
-        String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-
-
-    }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -199,4 +219,56 @@ public class MainActivity extends AppCompatActivity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+}
+
+
+class MyAsyncTask extends AsyncTask<String, Integer, Double> {
+
+    @Override
+    protected Double doInBackground(String... params) {
+        // TODO Auto-generated method stub
+        postData(params[0]);
+        return null;
+    }
+
+    protected void onPostExecute(Double result){
+    }
+    protected void onProgressUpdate(Integer... progress){
+    }
+
+    public void postData(String valueIWantToSend) {
+        // Create a new HttpClient and Post Header
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost("http://www.passbyus.org/codeforgood/translate.php");
+
+        try {
+            // Add your data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("person_id", "1"));
+            nameValuePairs.add(new BasicNameValuePair("match_me", valueIWantToSend));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            Log.v("ADDING VALUE PAIRS", "GOT TO THIS PARTTTTTTTTTTTTTTTTT");
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            sb.append(reader.readLine() + "\n");
+            String line = "0";
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            reader.close();
+            String result11 = sb.toString();
+            Log.v("SUSSSSSSSSSSSSSS", result11);
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 }
