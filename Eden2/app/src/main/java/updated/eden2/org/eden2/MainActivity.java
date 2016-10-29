@@ -16,10 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private MediaRecorder recorder = null;
+    private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
     Button recording;
 
     @Override
@@ -47,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private String getFilename(){
+        String filepath = Environment.getExternalStorageDirectory().getPath();
+        File file = new File(filepath,AUDIO_RECORDER_FOLDER);
+
+        if(!file.exists()){
+            file.mkdirs();
+        }
+
+        return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".3gp");
     }
 
     private void startRecording(){
