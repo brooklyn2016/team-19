@@ -26,7 +26,7 @@
 	{
 		$link->beginTransaction();
 		//Insert code here
-		$result = $link->prepare("SELECT * FROM person;");
+		$result = $link->prepare("SELECT * FROM person ORDER BY name DESC;");
 		$success = $result -> execute();	
 		if(!$success)
 		{
