@@ -31,7 +31,7 @@
 	{
 		$link->beginTransaction();
 		//Insert code here
-		$result = $link->prepare("UPDATE recording SET file_path = ? WHERE phrase = ? AND person_id = ?;");
+		$result = $link->prepare("UPDATE recording SET filepath = ? WHERE phrase = ? AND person_id = ?;");
 		$success = $result -> execute(array($file_path,$phrase,$person_id));	
 		if(!$success)
 		{
@@ -39,10 +39,7 @@
 			$link = null;
 			die("Failed due to:\n ".$result->errorInfo());
 		}
-		
-		$row = $result -> fetchAll();
-		$json = json_encode($row);
-		echo "Confirmation.".$json;
+		echo "Confirmation";
 		$result = null;
 		$link->commit();	
 		
@@ -53,4 +50,7 @@
 	}
 	
 	$link = null;
+	
+	
+	
 ?>
