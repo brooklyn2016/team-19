@@ -41,15 +41,16 @@
 		$found = false;
 		for($i = 0; $i < count($row); $i++)
 		{
+			//echo "!".$person_id." ".$match_me."!";
 			if(strcmp($match_me, $row[$i][0]) == 0)
 			{
 				$found = true;
-				echo "Confirmation ".$row[$i][1];
+				echo $row[$i][1];
 			}
 		}
 		if(!$found)
 		{
-			echo "Failure";
+			echo "-1";
 		}
 		$result = null;
 		$link->commit();
