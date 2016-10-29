@@ -14,7 +14,11 @@ public class EditActivity extends AppCompatActivity {
     }
 
     protected void goToResultsAct(View v) {
-        Intent intent = new Intent(this,Results.class);
-        startActivity(intent);
+        Intent intent = getIntent();
+        String toEdit = intent.getStringExtra("STRING_FROM_SERVER");
+        String[] texts = toEdit.split(" ");
+        //TODO: create texts.length number of textfields
+        //TODO: post to server
+        finish();
     }
 }
