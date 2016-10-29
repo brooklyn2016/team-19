@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
             Log.v("GOTTEN PHRASES!!!", trans_phrase);
             i.putExtra("translation", trans_phrase);
             txtSpeechOutput.setText(trans_phrase);
-            //startActivity(i);
+            startActivity(i);
         }
         protected void onProgressUpdate(Integer... progress){
         }

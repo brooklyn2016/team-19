@@ -14,16 +14,18 @@ public class Results extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_results);
         Intent intent = getIntent();
         toEdit = intent.getStringExtra("translation");
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout_linear);
         String[] texts = toEdit.split(" ");
         for(int i = 0; i < texts.length; i++) {
             TextView textView = new TextView(Results.this);
-            textView.setHint(texts[i]);
+            textView.setText(texts[i]);
+            textView.setTextSize(40);
             layout.addView(textView);
         }
-        setContentView(R.layout.activity_results);
+
     }
 
     protected void goToEditAct(View v) {
