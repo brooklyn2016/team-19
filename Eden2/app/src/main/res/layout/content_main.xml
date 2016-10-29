@@ -32,11 +32,11 @@
             android:weightSum="1.0">
 
             <Button
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/profile_1"
                 android:text="P"
                 android:textSize="40dp"
-                android:paddingRight="5dp"
+                android:paddingRight="10dp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:background="@drawable/round_button"
@@ -46,9 +46,9 @@
 
 
             <Button
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="wrap_content"
-                android:paddingLeft="5dp"
+                android:paddingLeft="10dp"
                 android:id="@+id/add_new"
                 android:text="+"
                 android:textSize="100dp"

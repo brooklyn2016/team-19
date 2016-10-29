@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.speech.RecognizerIntent;
 import android.content.Intent;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +56,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     String phrase;
-    Button recording;
+    Button recording, add;
     TextView txtSpeechInput;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         recording = (Button) findViewById(R.id.profile_1);
         txtSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
-
+        add = (Button) findViewById(R.id.add_new);
         recording.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 promptSpeechInput();
             }
         });
-
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
