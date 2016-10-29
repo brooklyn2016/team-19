@@ -39,5 +39,14 @@
 			<input type="submit">
 		</form>
 	</a>
+	
+	<a>
+		<h1>translate2</h1></br>
+		<form action="translate2.php" method="post">
+			person_id: <br><input type="text" name="person_id"><br>
+			match_me: <br><input type="text" name="match_me"><br>
+			<input type="submit">
+		</form>
+	</a>
 </body>
 </html>
