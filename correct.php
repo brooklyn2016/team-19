@@ -16,7 +16,7 @@
 	}
 	catch (PDOException $e) 
 	{
-		die('Connection failed: ' . $e->getMessage());
+		die('-1 ' . $e->getMessage());
 	}
 	
 	//Get HTTPS response ready
@@ -36,7 +36,7 @@
 		{
 			$result = null;
 			$link = null;
-			die("Failed due to:\n ".$result->errorInfo());
+			die("-1 ".$result->errorInfo());
 		}
 		echo "Confirmation";
 		$result = null;
@@ -45,7 +45,7 @@
 	}
 	catch(Exception $e)
 	{
-		echo "Failed ".$e->getMessage();
+		echo -1 ".$e->getMessage();
 	}
 	
 	$link = null;
