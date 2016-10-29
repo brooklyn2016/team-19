@@ -1,8 +1,10 @@
 package updated.eden2.org.eden2;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
@@ -15,15 +17,31 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.speech.RecognizerIntent;
+import android.content.Intent;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private MediaRecorder recorder = null;
-    private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
-    String newestFile;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+    String phrase;
     Button recording;
+    TextView txtSpeechInput;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,78 +50,65 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         recording = (Button) findViewById(R.id.profile_1);
+        txtSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
 
-        recording.setOnTouchListener(new View.OnTouchListener() {
+        recording.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
-                switch(event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        startRecording();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        Log.v("UPPPPPPPPPP", "MCALLLLING STOP RECORDING!");
-                        stopRecording();
-                        break;
-                }
-                return false;
+            public void onClick(View v) {
+                promptSpeechInput();
             }
         });
 
-    }
-    private String getFilename(){
-        String filepath = Environment.getExternalStorageDirectory().getPath();
-        File file = new File(filepath,AUDIO_RECORDER_FOLDER);
 
-        if(!file.exists()){
-            file.mkdirs();
-        }
 
-        return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".3gp");
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    private void startRecording(){
-        Log.v("STARTED RECORDING", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        recorder = new MediaRecorder();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        newestFile = getFilename();
-        recorder.setOutputFile(newestFile);
-        recorder.setOnErrorListener(errorListener);
-        recorder.setOnInfoListener(infoListener);
-
+    /**
+     * Showing google speech input dialog
+     */
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
         try {
-            recorder.prepare();
-            recorder.start();
-        } catch (IllegalStateException e) {
-            Log.v("RECORDING ERROR", "THIS IS BAD");
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_SHORT).show();
         }
     }
-    private MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
-        @Override
-        public void onError(MediaRecorder mr, int what, int extra) {
-        }
-    };
 
-    private MediaRecorder.OnInfoListener infoListener = new MediaRecorder.OnInfoListener() {
-        @Override
-        public void onInfo(MediaRecorder mr, int what, int extra) {
-        }
-    };
+    /**
+     * Receiving speech input
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    private void stopRecording(){
-        if(null != recorder){
-            recorder.stop();
-            recorder.reset();
-            recorder.release();
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
 
-            recorder = null;
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    txtSpeechInput.setText(result.get(0));
+
+                    phrase = result.get(0);
+                }
+                break;
+            }
+
         }
     }
+
 
 
     @Override
@@ -128,17 +133,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void newProfile (View v) {
+    public void newProfile(View v) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         //existing user button
-        alertDialogBuilder.setNegativeButton("Existing",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton("Existing", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int i) {
                 //request list of all profiles, open new activity
                 dialog.dismiss();
             }
         });
         //add new user button
-        alertDialogBuilder.setPositiveButton("Add New",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton("Add New", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int i) {
                 //open new activity
                 dialog.dismiss();
@@ -155,4 +160,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://updated.eden2.org.eden2/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://updated.eden2.org.eden2/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
 }
