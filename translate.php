@@ -28,7 +28,7 @@
 	{
 		$link->beginTransaction();
 		//Insert code here
-		$result = $link->prepare("SELECT * FROM recording WHERE person_id = ?;");
+		$result = $link->prepare("SELECT phrase, filepath FROM recording WHERE person_id = ?;");
 		$success = $result -> execute($person_id);	
 		if(!$success)
 		{
@@ -38,14 +38,21 @@
 		}
 		
 		$row = $result -> fetchAll();
-		for()
+		$found = false;
+		for($i = 0; $i < count($result); i++)
 		{
-			
+			if(strcmp($match_me, $result[$i][0]) == 0)
+			{
+				$found = true;
+				echo "Confirmation ".$result[$i][1];
+			}
 		}
-		echo "Confirmation.".$json;
+		if(!$found)
+		{
+			echo "Failure";
+		}
 		$result = null;
-		$link->commit();	
-		
+		$link->commit();
 	}
 	catch(Exception $e)
 	{
