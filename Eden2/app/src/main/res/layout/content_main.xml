@@ -21,19 +21,20 @@
         android:layout_marginTop="10dp"
         android:weightSum="1.0">
 
-    <ImageView
+    <Button
         android:layout_height="wrap_content"
+        android:id="@+id/profile_1"
         android:layout_width="wrap_content"
-        android:src="@drawable/prof_pic"
+        android:background="@drawable/prof_pic"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:layout_weight=".5" />
 
-    <ImageView
+    <Button
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/add_new"
-        android:src="@drawable/add"
+        android:background="@drawable/add"
         android:onClick="newProfile"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
