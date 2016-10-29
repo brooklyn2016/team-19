@@ -49,10 +49,15 @@
 			{
 				if(strcmp($explos[$i],$row[$y][0]) == 0)
 				{
+					$found = true;
 					echo $row[$y][1]." ";
 					break;
 				}
 			}
+		}
+		if($found == false)
+		{
+			echo "-1";
 		}
 		
 		$result = null;

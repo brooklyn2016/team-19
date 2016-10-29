@@ -65,7 +65,7 @@
 			}
 			$result = null;
 			//Commit time
-			echo "Confirmation\n";
+			echo "Confirmation";
 			$link->commit();
 		} 
 		else 
