@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Eden2</string>
-    <string name="home_name">Eden II Home</string>
+    <string name="home_name">Eden II - Home</string>
     <string name="action_settings">Settings</string>
 
 
@@ -8,6 +8,8 @@
     <string name="speech_prompt">Say something&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
     <string name="tap_on_mic">Tap on mic to speak</string>
+    <string name="title_activity_add_person">Add New</string>
 
-
+    <string name="addPersonWelcome">Add </string>
+    <string name="save">save</string>
 </resources>

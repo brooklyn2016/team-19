@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     public void newProfile(View v) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         //existing user button
-        alertDialogBuilder.setNegativeButton("Existing", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton("Add Existing", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int i) {
                 //request list of all profiles, open new activity
                 dialog.dismiss();
@@ -174,10 +174,12 @@ public class MainActivity extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton("Add New", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int i) {
                 //open new activity
+                Intent nextPg = new Intent(MainActivity.this, AddPerson.class);
+                startActivity(nextPg);
                 dialog.dismiss();
             }
         });
-        alertDialogBuilder.setMessage("This is a standard message");
+        alertDialogBuilder.setMessage("What would you like to do?");
         AlertDialog popUp = alertDialogBuilder.create();
         popUp.show();
     }

@@ -32,7 +32,10 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".EditActivity" />
-        <activity android:name=".Results"></activity>
+        <activity
+            android:name=".AddPerson"
+            android:label="@string/title_activity_add_person"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
