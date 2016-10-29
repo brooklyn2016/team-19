@@ -1,1 +1,53 @@
+-- phpMyAdmin SQL Dump
+-- version 4.5.2
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Oct 29, 2016 at 12:45 AM
+-- Server version: 5.7.9
+-- PHP Version: 7.0.0
 
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `codeforgood`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `person`
+--
+
+DROP TABLE IF EXISTS `person`;
+CREATE TABLE IF NOT EXISTS `person` (
+  `person_id` int(64) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `place` varchar(64) NOT NULL,
+  PRIMARY KEY (`person_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recording`
+--
+
+DROP TABLE IF EXISTS `recording`;
+CREATE TABLE IF NOT EXISTS `recording` (
+  `person_id` int(64) NOT NULL,
+  `phrase` varchar(64) NOT NULL,
+  `filepath` varchar(256) NOT NULL,
+  PRIMARY KEY (`person_id`,`phrase`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
