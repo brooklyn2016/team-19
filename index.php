@@ -12,7 +12,7 @@
 	</a>
 	
 	<a>
-		<h1>Add Phrase:</h1></br>
+		<h1>Add person no image:</h1></br>
 		<form action="addpersonnoimg.php" method="post">
 			name: </br><input type="text" name="name"></br>
 			<input type="submit">

@@ -27,7 +27,7 @@
 	//Check parameters
 	if((strlen($name) > 64) or (strlen($name) < 0))
 	{
-		die (-1");
+		die ("-1");
 	}
 	
 	try
