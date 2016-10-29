@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     String phrase, translation;
     Button recording, add;
-    TextView txtSpeechInput;
+    TextView txtSpeechInput, txtSpeechOutput;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         recording = (Button) findViewById(R.id.profile_1);
         txtSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
+        txtSpeechOutput = (TextView) findViewById(R.id.txtSpeechOutput);
         add = (Button) findViewById(R.id.add_new);
         recording.setOnClickListener(new View.OnClickListener() {
 
@@ -243,7 +244,8 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(activity, Results.class);
             Log.v("GOTTEN PHRASES!!!", trans_phrase);
             i.putExtra("translation", trans_phrase);
-            startActivity(i);
+            txtSpeechOutput.setText(trans_phrase);
+            //startActivity(i);
         }
         protected void onProgressUpdate(Integer... progress){
         }

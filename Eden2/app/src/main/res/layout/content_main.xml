@@ -58,6 +58,15 @@
                 android:adjustViewBounds="true"
                 android:layout_weight=".5"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/txtSpeechOutput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="26dp"
+            android:textStyle="normal" />
     </RelativeLayout>
 </ScrollView>
 

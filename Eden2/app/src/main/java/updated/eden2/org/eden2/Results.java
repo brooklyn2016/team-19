@@ -19,7 +19,7 @@ public class Results extends AppCompatActivity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout_linear);
         String[] texts = toEdit.split(" ");
         for(int i = 0; i < texts.length; i++) {
-            TextView textView = new TextView(this);
+            TextView textView = new TextView(Results.this);
             textView.setHint(texts[i]);
             layout.addView(textView);
         }
