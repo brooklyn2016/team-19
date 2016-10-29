@@ -1,20 +1,19 @@
 <?php
 	//This is blah
 	
-	//HTTPS Check
-	if($_SERVER['SERVER_PORT'] !== 443 && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off')) 
+	//HTTPS Check, but breaks android
+	/*if($_SERVER['SERVER_PORT'] !== 443 && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off')) 
 	{
 		header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 		exit;
-	}
+	}*/
 	
 	//Database Start
 	
 	session_start();
 	try
 	{
-		//$link = new PDO('pgsql:host=passdb.czwtincxuane.us-west-2.rds.amazonaws.com;port=5432;dbname=codeforgood', $_SERVER['DB_USER'],$_SERVER['DB_PASS']);
-		$link = new PDO('pgsql:host=passdb.czwtincxuane.us-west-2.rds.amazonaws.com;port=5432;dbname=codeforgood', "ex221","thegame66613");
+		$link = new PDO('pgsql:host=passdb.czwtincxuane.us-west-2.rds.amazonaws.com;port=5432;dbname=codeforgood', $_SERVER['DB_USER'],$_SERVER['DB_PASS']);
 	}
 	catch (PDOException $e) 
 	{
@@ -42,6 +41,7 @@
 		$row = $result -> fetchAll();
 	
 		$found = false;
+		//echo "!".$person_id." ".$match_me."!";
 		$explos = explode(" ", $match_me);
 		for($i = 0; $i < count($explos); $i++)
 		{
@@ -49,10 +49,15 @@
 			{
 				if(strcmp($explos[$i],$row[$y][0]) == 0)
 				{
+					$found = true;
 					echo $row[$y][1]." ";
 					break;
 				}
 			}
+		}
+		if($found == false)
+		{
+			echo "-1";
 		}
 		
 		$result = null;

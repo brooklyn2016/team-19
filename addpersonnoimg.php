@@ -1,12 +1,12 @@
 <?php
 	//This is blah
 	
-	//HTTPS Check
-	if($_SERVER['SERVER_PORT'] !== 443 && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off')) 
+	//HTTPS Check, seems to break android
+	/*if($_SERVER['SERVER_PORT'] !== 443 && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off')) 
 	{
 		header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 		exit;
-	}
+	}*/
 	
 	//Database Start
 	session_start();
@@ -21,7 +21,7 @@
 	
 	//Get HTTPS response ready
 
-	//Getting values
+	//Getting values/*
 	$name = htmlspecialchars($_POST["name"], ENT_QUOTES, 'UTF-8');
 	
 	//Check parameters

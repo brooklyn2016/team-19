@@ -1,12 +1,12 @@
 <?php
 	//This is blah
 	
-	//HTTPS Check
-	if($_SERVER['SERVER_PORT'] !== 443 && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off')) 
+	//HTTPS Check, Seems to break android
+	/*if($_SERVER['SERVER_PORT'] !== 443 && (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off')) 
 	{
 		header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 		exit;
-	}
+	}*/
 	
 	//Database Start
 	session_start();
@@ -65,7 +65,7 @@
 			}
 			$result = null;
 			//Commit time
-			echo "Confirmation\n";
+			echo "Confirmation";
 			$link->commit();
 		} 
 		else 
