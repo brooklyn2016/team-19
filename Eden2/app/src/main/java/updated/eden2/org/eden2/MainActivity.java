@@ -1,5 +1,7 @@
 package updated.eden2.org.eden2;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-    
+
     }
 
     @Override
@@ -44,6 +46,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newProfile (View v) {
-
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        //existing user button
+        alertDialogBuilder.setNegativeButton("Existing",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int i) {
+                //request list of all profiles, open new activity
+                dialog.dismiss();
+            }
+        });
+        //add new user button
+        alertDialogBuilder.setPositiveButton("Add New",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int i) {
+                //open new activity
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.setMessage("This is a standard message");
+        AlertDialog popUp = alertDialogBuilder.create();
+        popUp.show();
     }
+
 }
