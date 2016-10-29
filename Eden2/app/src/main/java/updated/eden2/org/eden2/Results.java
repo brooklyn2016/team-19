@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,12 +18,14 @@ public class Results extends AppCompatActivity {
         Intent intent = getIntent();
         toEdit = intent.getStringExtra("translation");
         LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(30, 0, 30, 0);
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT, 0.0F);
         String[] texts = toEdit.split(" ");
         for(int i = 0; i < texts.length; i++) {
             TextView textView = new TextView(this);
-            textView.setHint(texts[i]);
+            textView.setText(texts[i]);
             layout.addView(textView);
         }
         setContentView(R.layout.activity_results);
