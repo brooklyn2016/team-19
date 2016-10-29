@@ -5,16 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class EditActivity extends AppCompatActivity {
+public class Results extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.activity_results);
     }
 
-    protected void goToResultsAct(View v) {
-        Intent intent = new Intent(this,Results.class);
+    protected void goToEditAct(View v) {
+        Intent intent = new Intent(this,EditActivity.class);
         startActivity(intent);
     }
 }
