@@ -16,3 +16,5 @@ CREATE TABLE IF NOT EXISTS recording (
 ALTER TABLE recording
 ADD CONSTRAINT fk_person_id 
 FOREIGN KEY (person_id) REFERENCES person (person_id);
+
+alter table person alter column person_file SET DEFAULT NULL;
