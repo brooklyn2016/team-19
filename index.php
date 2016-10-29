@@ -13,6 +13,15 @@
 	
 	<a>
 		<h1>Add Phrase:</h1></br>
+		<form action="addpersonnoimg.php" method="post">
+			name: </br><input type="text" name="name"></br>
+			<input type="submit">
+		</form>
+	</a>
+	
+	
+	<a>
+		<h1>Add Phrase:</h1></br>
 		<form action="addPhrase.php" method="post">
 			person_id: <br><input type="text" name="person_id"><br>
 			phrase: <br><input type="text" name="phrase"><br>
