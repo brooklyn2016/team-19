@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/txtSpeechInput"
             android:weightSum="1.0">
 
@@ -36,28 +37,26 @@
                 android:id="@+id/profile_1"
                 android:text="P"
                 android:textSize="40dp"
-                android:paddingRight="10dp"
+                android:layout_marginRight="10dp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
-                android:background="@drawable/round_button"
+                android:background="@color/colorPrimary"
                 android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:layout_weight=".5" />
+                android:layout_weight=".4" />
 
 
             <Button
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
-                android:paddingLeft="10dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/add_new"
                 android:text="+"
-                android:textSize="100dp"
+                android:textSize="70dp"
                 android:textColor="@color/white"
-                android:background="@drawable/round_button"
+                android:background="@color/colorPrimary"
                 android:onClick="newProfile"
                 android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:layout_weight=".5" />
+                android:layout_weight=".4"/>
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

@@ -1,5 +1,6 @@
 package updated.eden2.org.eden2;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -55,7 +56,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
-    String phrase;
+    String phrase, translation;
     Button recording, add;
     TextView txtSpeechInput;
     /**
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String request_url = "http://www.passbyus.org/codeforgood/translate.php";
+        String request_url = "https://www.passbyus.org/codeforgood/translate.php";
         switch (requestCode) {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
@@ -123,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
                     phrase = result.get(0);
                     try {
-                        new MyAsyncTask().execute(phrase);
+                        new MyAsyncTask(MainActivity.this).execute(phrase);
+
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -219,56 +221,69 @@ public class MainActivity extends AppCompatActivity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
-}
 
 
-class MyAsyncTask extends AsyncTask<String, Integer, Double> {
 
-    @Override
-    protected Double doInBackground(String... params) {
-        // TODO Auto-generated method stub
-        postData(params[0]);
-        return null;
-    }
-
-    protected void onPostExecute(Double result){
-    }
-    protected void onProgressUpdate(Integer... progress){
-    }
-
-    public void postData(String valueIWantToSend) {
-        // Create a new HttpClient and Post Header
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://www.passbyus.org/codeforgood/translate.php");
-
-        try {
-            // Add your data
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("person_id", "1"));
-            nameValuePairs.add(new BasicNameValuePair("match_me", valueIWantToSend));
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            Log.v("ADDING VALUE PAIRS", "GOT TO THIS PARTTTTTTTTTTTTTTTTT");
-            // Execute HTTP Post Request
-            HttpResponse response = httpclient.execute(httppost);
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "iso-8859-1"), 8);
-            StringBuilder sb = new StringBuilder();
-            sb.append(reader.readLine() + "\n");
-            String line = "0";
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            reader.close();
-            String result11 = sb.toString();
-            Log.v("SUSSSSSSSSSSSSSS", result11);
-
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    class MyAsyncTask extends AsyncTask<String, Integer, Double> {
+        private Activity activity;
+        String trans_phrase = "";
+        public MyAsyncTask(Activity activity) {
+            this.activity = activity;
         }
-    }
+        @Override
+        protected Double doInBackground(String... params) {
+            // TODO Auto-generated method stub
+            postData(params[0]);
+            return null;
+        }
 
+        protected void onPostExecute(Double result){
+            Intent i = new Intent(activity, Results.class);
+            Log.v("GOTTEN PHRASES!!!", trans_phrase);
+            i.putExtra("translation", trans_phrase);
+            startActivity(i);
+        }
+        protected void onProgressUpdate(Integer... progress){
+        }
+
+        public void postData(String valueIWantToSend) {
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost("http://www.passbyus.org/codeforgood/translate.php");
+
+            try {
+                // Add your data
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("person_id", "1"));
+                nameValuePairs.add(new BasicNameValuePair("match_me", valueIWantToSend));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                Log.v("ADDING VALUE PAIRS", "GOT TO THIS PARTTTTTTTTTTTTTTTTT");
+                // Execute HTTP Post Request
+                HttpResponse response = httpclient.execute(httppost);
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "iso-8859-1"), 8);
+                StringBuilder sb = new StringBuilder();
+                sb.append(reader.readLine() + "\n");
+                String line = "0";
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                reader.close();
+                String result11 = sb.toString();
+                trans_phrase = result11;
+                Log.v("SUSSSSSSSSSSSSSS", result11);
+
+            } catch (ClientProtocolException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+    }
 }
+
+
+
