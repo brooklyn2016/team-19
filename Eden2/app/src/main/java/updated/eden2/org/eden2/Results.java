@@ -15,6 +15,7 @@ public class Results extends AppCompatActivity {
 
     protected void goToEditAct(View v) {
         Intent intent = new Intent(this,EditActivity.class);
+        intent.putExtra("STRING_FROM_SERVER", "testString");
         startActivity(intent);
     }
 }
