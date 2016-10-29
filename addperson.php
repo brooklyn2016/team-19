@@ -16,7 +16,7 @@
 	}
 	catch (PDOException $e) 
 	{
-		die('Connection failed: ' . $e->getMessage());
+		die('-1 ' . $e->getMessage());
 	}
 	
 	//Get HTTPS response ready
@@ -27,7 +27,7 @@
 	//Check parameters
 	if((strlen($name) > 64) or (strlen($name) < 0))
 	{
-		die ("Failed due to bad parameters\n");
+		die (-1");
 	}
 	
 	try
@@ -40,7 +40,7 @@
 		{
 			$result = null;
 			$link = null;
-			die("Failed due to:\n ".$result->errorInfo());
+			die("-1 ".$result->errorInfo());
 		}
 		
 		$row = $result -> fetch(PDO::FETCH_NUM);
@@ -61,7 +61,7 @@
 				$error = implode($result->errorInfo());
 				$result = null;
 				$link = null;	
-				die("Failed due to:\n ".$error);
+				die("-1 ".$error);
 			}
 			$result = null;
 			//Commit time
@@ -73,12 +73,12 @@
 			$link->rollBack();
 			$result = null;
 			$link = null;
-			echo "Failure due to upload failed";
+			echo "-1";
 		}
 	}
 	catch(Exception $e)
 	{
-		echo "Failed ".$e->getMessage();
+		echo "-1 ".$e->getMessage();
 	}
 	
 	$link = null;

@@ -9,14 +9,16 @@
 	}*/
 	
 	//Database Start
+	
 	session_start();
 	try
 	{
-		$link = new PDO('pgsql:host=passdb.czwtincxuane.us-west-2.rds.amazonaws.com;port=5432;dbname=codeforgood', $_SERVER['DB_USER'],$_SERVER['DB_PASS']);
+		//$link = new PDO('pgsql:host=passdb.czwtincxuane.us-west-2.rds.amazonaws.com;port=5432;dbname=codeforgood', $_SERVER['DB_USER'],$_SERVER['DB_PASS']);
+		$link = new PDO('pgsql:host=passdb.czwtincxuane.us-west-2.rds.amazonaws.com;port=5432;dbname=codeforgood', "ex221","thegame66613");
 	}
 	catch (PDOException $e) 
 	{
-		die('Connection failed: ' . $e->getMessage());
+		die('-1 ' . $e->getMessage());
 	}
 	
 	//Get HTTPS response ready
@@ -34,30 +36,31 @@
 		{
 			$result = null;
 			$link = null;
-			die("Failed due to:\n ".$result->errorInfo());
+			die("-1 ".$result->errorInfo());
 		}
 		
 		$row = $result -> fetchAll();
+	
 		$found = false;
-		for($i = 0; $i < count($row); $i++)
+		$explos = explode(" ", $match_me);
+		for($i = 0; $i < count($explos); $i++)
 		{
-			//echo "!".$person_id." ".$match_me."!";
-			if(strcmp($match_me, $row[$i][0]) == 0)
+			for($y = 0; $y < count($row); $y++)
 			{
-				$found = true;
-				echo $row[$i][1];
+				if(strcmp($explos[$i],$row[$y][0]) == 0)
+				{
+					echo $row[$y][1]." ";
+					break;
+				}
 			}
 		}
-		if(!$found)
-		{
-			echo "-1";
-		}
+		
 		$result = null;
 		$link->commit();
 	}
 	catch(Exception $e)
 	{
-		echo "Failed ".$e->getMessage();
+		echo "-1 ".$e->getMessage();
 	}
 	
 	$link = null;

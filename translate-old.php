@@ -16,37 +16,48 @@
 	}
 	catch (PDOException $e) 
 	{
-		die('-1 ' . $e->getMessage());
+		die('Connection failed: ' . $e->getMessage());
 	}
 	
 	//Get HTTPS response ready
-	//Getting values
 	$person_id = (int) htmlspecialchars($_POST["person_id"], ENT_QUOTES, 'UTF-8');
-	$phrase = htmlspecialchars($_POST["phrase"], ENT_QUOTES, 'UTF-8');
-	$file_path = htmlspecialchars($_POST["file_path"], ENT_QUOTES, 'UTF-8');
+	$match_me = htmlspecialchars($_POST["match_me"], ENT_QUOTES, 'UTF-8');
 	
 	//Check parameters
 	try
 	{
 		$link->beginTransaction();
 		//Insert code here
-		$result = $link->prepare("INSERT INTO recording VALUES (?,?,?);");
-		$success = $result -> execute(array($person_id, $phrase, $file_path));	
+		$result = $link->prepare("SELECT phrase, filepath FROM recording WHERE person_id = ?;");
+		$success = $result -> execute(array($person_id));	
 		if(!$success)
 		{
 			$result = null;
 			$link = null;
-			die("-1 ".$result->errorInfo());
+			die("Failed due to:\n ".$result->errorInfo());
 		}
 		
-		echo "Confirmation";
+		$row = $result -> fetchAll();
+		$found = false;
+		for($i = 0; $i < count($row); $i++)
+		{
+			//echo "!".$person_id." ".$match_me."!";
+			if(strcmp($match_me, $row[$i][0]) == 0)
+			{
+				$found = true;
+				echo $row[$i][1];
+			}
+		}
+		if(!$found)
+		{
+			echo "-1";
+		}
 		$result = null;
-		$link->commit();	
-		
+		$link->commit();
 	}
 	catch(Exception $e)
 	{
-		echo "-1 ".$e->getMessage();
+		echo "Failed ".$e->getMessage();
 	}
 	
 	$link = null;
