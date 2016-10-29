@@ -1,4 +1,5 @@
 <?php
+	//This is a old version of translate, here for record keeping/debugging
 	//This is blah
 	
 	//HTTPS Check
