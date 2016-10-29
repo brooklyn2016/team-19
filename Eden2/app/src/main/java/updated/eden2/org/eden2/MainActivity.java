@@ -22,6 +22,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
     private MediaRecorder recorder = null;
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
+    String newestFile;
     Button recording;
 
     @Override
@@ -67,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        recorder.setOutputFile(getFilename());
+        newestFile = getFilename();
+        recorder.setOutputFile(newestFile);
         recorder.setOnErrorListener(errorListener);
         recorder.setOnInfoListener(infoListener);
 
