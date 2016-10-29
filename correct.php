@@ -45,7 +45,7 @@
 	}
 	catch(Exception $e)
 	{
-		echo -1 ".$e->getMessage();
+		echo -1 ".$e->getMessage()";
 	}
 	
 	$link = null;
